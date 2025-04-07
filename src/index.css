@@ -8,6 +8,11 @@ body {
   margin: 0;
 }
 
+label{
+  color: var(--azul-principal) !important;
+}
 
-
+p{
+  color: var(--azul-principal) !important;
+}
 

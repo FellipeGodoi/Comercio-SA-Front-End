@@ -3,3 +3,12 @@
   text-align: center;
 }
 
+.blueButton {
+  background: var(--azul-principal);
+  color: white;
+}
+.blueButton {
+  background: var(--laranja);
+  color: black;
+  font-weight: bold;
+}

@@ -1,5 +1,5 @@
 import AxiosClient from "../axios/AxiosClient.ts";
-import {Contact} from "../../types/Contact.ts";
+import {Contact} from "../../data/types/Contact.ts";
 
 
 export const createContactService = async (contact: Contact, id: number) => {

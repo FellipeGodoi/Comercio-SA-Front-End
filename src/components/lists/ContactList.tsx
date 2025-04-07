@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Table } from "react-bootstrap";
-import {Contact} from "../../types/Contact.ts";
+import {Contact} from "../../data/types/Contact.ts";
 import {deleteContactService} from "../../utils/services/ContactService.ts";
 import ModalContact from "../modals/ModalContact.tsx";
 
@@ -56,8 +56,8 @@ const ContactList: React.FC<ContactListProps> = ({ contacts, idClient, onUpdateC
                 <thead>
                 <tr>
                     <th>Contatos</th>
-                    <th className="col-1">
-                        <Button onClick={() => openContactModal(null)}> + </Button>
+                    <th className="col-1 text-center">
+                        <Button className="border-0" onClick={() => openContactModal(null)} style={{backgroundColor : "var(--azul-principal"}}> + </Button>
                     </th>
                 </tr>
                 </thead>
@@ -65,8 +65,8 @@ const ContactList: React.FC<ContactListProps> = ({ contacts, idClient, onUpdateC
                 {contacts.map((contact, index) => (
                     <tr key={index}>
                         <td onClick={() => openContactModal(index)}>{`Contato ${index + 1}`}</td>
-                        <td>
-                            <Button variant="danger" className="ri-delete-bin-5-fill" onClick={() => handleDeleteContact(contact)} />
+                        <td className="col-1 text-center">
+                            <Button className="ri-delete-bin-5-fill border-0" onClick={() => handleDeleteContact(contact)}  style={{backgroundColor : "var(--laranja)"}}/>
                         </td>
                     </tr>
                 ))}

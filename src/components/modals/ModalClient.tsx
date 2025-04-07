@@ -1,8 +1,8 @@
 import AxiosClient from "../../utils/axios/AxiosClient.ts";
 import {createClientService, deleteClientService, updateClientService} from "../../utils/services/ClientService.ts";
 import {useEffect, useState} from "react";
-import {Contact} from "../../types/Contact.ts";
-import {Client} from "../../types/Client.ts";
+import {Contact} from "../../data/types/Contact.ts";
+import {Client} from "../../data/types/Client.ts";
 import {Modal, Button} from "react-bootstrap";
 import TextInput from "../inputs/TextInput.tsx";
 import CpfInput from "../inputs/CpfInput.tsx";
@@ -45,7 +45,7 @@ const ModalClient: React.FC<ClientModalType> = ({ open, close, idCliente }) => {
         } else {
             limpar();
         }
-    }, [idCliente]);
+    }, [idCliente, contatos]);
 
     const limpar = () => {
         setIdClient(undefined);
@@ -107,7 +107,7 @@ const ModalClient: React.FC<ClientModalType> = ({ open, close, idCliente }) => {
     return (
         <Modal show={open} onHide={cancelar} backdrop="static" size="lg">
             <Modal.Header closeButton>
-                <Modal.Title>{idCliente ? `Editar ${nome}` : 'Cadastrar Cliente'}</Modal.Title>
+                <Modal.Title style={{color: "var(--azul-principal)"}}>{idCliente ? `Editar ${nome}` : 'Cadastrar Cliente'}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <form>
@@ -119,14 +119,14 @@ const ModalClient: React.FC<ClientModalType> = ({ open, close, idCliente }) => {
                 {idCliente && <ContactList contacts={contatos} idClient={idCliente} onUpdateContacts={setContatos} />}
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={cancelar}>Cancelar</Button>
+                <Button variant="secondary fw-semibold border-0" onClick={cancelar} style={{backgroundColor: "var(--laranja)"}}>Cancelar</Button>
                 {idCliente ? (
                     <>
-                        <Button variant="danger" onClick={removeClient}>Deletar Cliente</Button>
-                        <Button variant="primary" onClick={updateClient}>Salvar</Button>
+                        <Button variant="danger fw-semibold border-0" onClick={removeClient}>Deletar Cliente</Button>
+                        <Button variant="primary fw-semibold border-0" onClick={updateClient} style={{backgroundColor: "var(--azul-principal)"}}>Salvar</Button>
                     </>
                 ) : (
-                    <Button variant="primary" onClick={createClient}>Cadastrar</Button>
+                    <Button variant="primary" onClick={createClient} style={{backgroundColor: "var(--azul-principal)"}}>Cadastrar</Button>
                 )}
             </Modal.Footer>
         </Modal>

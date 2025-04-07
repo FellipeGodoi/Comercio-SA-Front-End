@@ -1,5 +1,5 @@
 import AxiosClient from "../axios/AxiosClient.ts";
-import {Client} from "../../types/Client.ts";
+import {Client} from "../../data/types/Client.ts";
 
 export const createClientService = async (client: Client) => {
     try {

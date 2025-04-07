@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react";
-import {Client} from "../../types/Client.ts";
+import {Client} from "../../data/types/Client.ts";
 import AxiosClient from "../../utils/axios/AxiosClient.ts";
 import {Container, InputGroup, Form, Button, Table} from "react-bootstrap";
 import ModalClient from "../../components/modals/ModalClient.tsx";
@@ -61,17 +61,17 @@ export default function ListClientsPage() {
                             value={filtro}
                             onChange={handleSearchChange}
                         />
-                        <Button className="search-button" id="button-searchClient">
-                            Buscar
-                        </Button>
                     </InputGroup>
-                    <Table hover striped responsive="lg" className=" table-client w-100">
-                        <thead className="client-table-head">
+                    <Table hover striped responsive="lg"
+                           className=" table-client w-100">
+                        <thead className="client-table-head" >
                         <tr>
-                            <th className="col-3 text-start">CPF</th>
-                            <th className="col-6 text-start">Nome</th>
+                            <th className="col-3 text-start" style={{color: "var(--azul-principal) "}}>CPF</th>
+                            <th className="col-6 text-start" style={{color: "var(--azul-principal) "}}>Nome</th>
                             <th className="col-3">
-                                <Button className="w-100 cad-client-button fw-bold" onClick={() => openModal(null)}>
+                                <Button className="w-100 cad-client-button fw-bold border-0"
+                                        style={{backgroundColor: "var(--azul-principal"}}
+                                        onClick={() => openModal(null)}>
                                     Cadastrar Cliente
                                 </Button>
                             </th>
@@ -89,6 +89,8 @@ export default function ListClientsPage() {
                         ))}
                         </tbody>
                     </Table>
+
+
                 </Container>
             </div>
         </>
