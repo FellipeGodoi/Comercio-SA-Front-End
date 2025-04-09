@@ -5,9 +5,10 @@ interface CampoTextoSimplesProps {
     label: string;
     saveText: (data: string) => void;
     text?: string | null;
+    error?: string | null;
 }
 
-const TextInput: React.FC<CampoTextoSimplesProps> = ({id, label, saveText, text}) => {
+const TextInput: React.FC<CampoTextoSimplesProps> = ({id, label, saveText, text, error}) => {
     const [localText, setLocalText] = useState<string>('');
 
     useEffect(() => {
@@ -25,12 +26,17 @@ const TextInput: React.FC<CampoTextoSimplesProps> = ({id, label, saveText, text}
         <div className="mb-2">
             <label htmlFor="buscatag" className="fw-semibold" hidden={label === ""}>{label}</label>
             <input
-                className={`form-control`}
+                className={`form-control ${error ? "is-invalid" : ""}`}
                 type="text"
                 id={id}
                 value={localText}
                 onChange={updateText}
             />
+            {error && (
+                <div className="invalid-feedback">
+                    {error}
+                </div>
+            )}
         </div>
     )
 }

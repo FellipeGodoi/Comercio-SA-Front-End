@@ -5,9 +5,10 @@ interface CampoDataSimplesProps {
     label: string;
     saveDate: (data: string) => void;
     date?: string | null;
+    error?: string | null;
 }
 
-const DateInput: React.FC<CampoDataSimplesProps> = ({ id, label, saveDate, date }) => {
+const DateInput: React.FC<CampoDataSimplesProps> = ({ id, label, saveDate, date, error }) => {
     const [localDate, setLocalDate] = useState<string>('');
 
     useEffect(() => {
@@ -24,12 +25,13 @@ const DateInput: React.FC<CampoDataSimplesProps> = ({ id, label, saveDate, date 
         <div className="mb-2">
             <label htmlFor={id} className="fw-semibold" hidden={label === ""}>{label}</label>
             <input
-                className={`form-control`}
+                className={`form-control ${error ? "is-invalid" : ""}`}
                 type="date"
                 id={id}
                 value={localDate}
                 onChange={updateDate}
             />
+            {error && <div className="invalid-feedback">{error}</div>}
         </div>
     );
 }

@@ -33,7 +33,9 @@ const ContactList: React.FC<ContactListProps> = ({ contacts, idClient, onUpdateC
 
     const handleSaveContact = (updatedContact: Contact) => {
         if (contactModal.editIndex !== null) {
-            const updatedContacts = contacts.map((contact, index) => (index === contactModal.editIndex ? updatedContact : contact));
+            const updatedContacts = contacts.map((contact, index) =>
+                index === contactModal.editIndex ? updatedContact : contact
+            );
             onUpdateContacts(updatedContacts);
         } else {
             onUpdateContacts([...contacts, updatedContact]);

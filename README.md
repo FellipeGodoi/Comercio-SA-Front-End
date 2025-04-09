@@ -1,4 +1,5 @@
-# Comércio SA
+# Comércio SA 
+
 Pequena aplicação web com o intuito de demonstrar conhecimento no uso do React com TypeScript.
 <br/> Nela, o usuário pode realizar o cadastro, edição e consulta de clientes e seus respectivos contatos salvos.
 <br/> Esta aplicação está conectada a este back-end:
@@ -39,7 +40,7 @@ npm run dev
 
 ## Estrutura do projeto
 ```graphql
-src/
+src
 ├── components/              # Componentes reutilizáveis da interface
 │   ├── header/              # Cabeçalho da aplicação
 │   ├── inputs/              # Campos de formulário personalizados
@@ -51,15 +52,15 @@ src/
 │   └── types/               # Tipagens TypeScript usadas no app
 │
 ├── pages/                   # Páginas principais da aplicação
-│   ├── clientPage/          # Página de cliente individual
 │   ├── listClientPage/      # Página de listagem de clientes
 │   └── notFoundPage/        # Página de erro 404
 │
 ├── utils/                   # Funções utilitárias e configuração
 │   ├── axios/               # Configuração do Axios para requisições HTTP
 │   │   └── axiosClient.ts   # Cliente Axios com baseURL e interceptadores
-│   ├── routes.ts            # Rotas da aplicação com React Router
-│   └── services.ts          # Serviços de integração com o backend
+│   ├── routes/              # Rotas da aplicação com React Router
+│   ├── validations/         # Validações de inputs
+│   └── services/            # Serviços de integração com o backend
 │
 ├── App.css                 # Estilos globais da aplicação
 ├── App.tsx                 # Componente raiz da aplicação
@@ -112,5 +113,7 @@ src/
 
 - [x] **RN08:** O sistema deve **validar os dados informados** antes de permitir o cadastro ou edição.
 
+
+<img src="src/data/images/Logo-Comercio-SA.png" width="200"/>
 
 

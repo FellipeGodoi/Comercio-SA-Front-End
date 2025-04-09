@@ -5,6 +5,8 @@ import {createContactService, updateContactService} from "../../utils/services/C
 import TextInput from "../inputs/TextInput.tsx";
 import BigTextInput from "../inputs/BigTextInput.tsx";
 
+import {stringValidation} from "../../utils/validation/StringValidation.ts";
+
 type ContactModalProps = {
     open: boolean;
     close: () => void;
@@ -19,6 +21,8 @@ const ContactModal: React.FC<ContactModalProps> = ({ open, close, contact, idCli
     const [valor, setValor] = useState<string>(contact?.valor || "");
     const [observacao, setObservacao] = useState<string>(contact?.observacao || "");
 
+    const [tipoError, setTipoError] =useState<string|null>(null);
+    const [valorError, setValorError] = useState<string|null>(null);
 
     useEffect(() => {
         if (contact) {
@@ -40,6 +44,9 @@ const ContactModal: React.FC<ContactModalProps> = ({ open, close, contact, idCli
     };
 
     const handleSave = async () => {
+        const isValid = await validData();
+        if (!isValid) return;
+
         const newContact : Contact = ({
             id,
             tipo: tipo,
@@ -63,6 +70,16 @@ const ContactModal: React.FC<ContactModalProps> = ({ open, close, contact, idCli
         cancel();
     };
 
+    const validData = async (): Promise<boolean> => {
+        const errorTipo = stringValidation(tipo);
+        const errorValor = stringValidation(valor);
+
+        setTipoError(errorTipo);
+        setValorError(errorValor);
+
+        return !errorTipo && !errorValor;
+    };
+
     return (
         <>
             <Modal show={open} onHide={cancel} backdrop="static">
@@ -73,8 +90,8 @@ const ContactModal: React.FC<ContactModalProps> = ({ open, close, contact, idCli
                 </Modal.Header>
                 <Modal.Body>
                     <form>
-                        <TextInput id="tipoContato" label="tipo de contato" text={tipo}  saveText={setTipo} />
-                        <TextInput id="valorContato" label="valor contato ( email, telefone, redes sociais, etc )" text={valor}  saveText={setValor} />
+                        <TextInput id="tipoContato" label="tipo de contato" text={tipo}  saveText={setTipo} error={tipoError} />
+                        <TextInput id="valorContato" label="valor contato ( email, telefone, redes sociais, etc )" text={valor}  saveText={setValor} error={valorError} />
                         <BigTextInput id="observacaoContato" label="observações" text={observacao}  saveText={setObservacao} rows={3} placeholder={"Ligar entre os horarios..."}/>
                     </form>
                 </Modal.Body>

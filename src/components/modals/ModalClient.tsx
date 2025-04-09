@@ -8,6 +8,9 @@ import TextInput from "../inputs/TextInput.tsx";
 import CpfInput from "../inputs/CpfInput.tsx";
 import DateInput from "../inputs/DateInput.tsx";
 import ContactList from "../lists/ContactList.tsx";
+import {validCpf} from "../../utils/validation/CpfValidation.ts";
+import {birthDateValidation} from "../../utils/validation/BirthDateValidation.ts";
+import {stringValidation} from "../../utils/validation/StringValidation.ts";
 
 type ClientModalType = {
     open: boolean;
@@ -22,6 +25,10 @@ const ModalClient: React.FC<ClientModalType> = ({ open, close, idCliente }) => {
     const [dataNascimento, setDataNascimento] = useState<Date | null>(null);
     const [endereco, setEndereco] = useState<string>("");
     const [contatos, setContatos] = useState<Contact[]>([]);
+
+    const [nomeError, setNomeError] = useState<string|null>("");
+    const [cpfError, setCpfError] = useState<string | null >(null);
+    const [dataNascimentoError, setDataNascimentoError] = useState<string | null >(null);
 
     useEffect(() => {
         const buscaCliente = async (id: number) => {
@@ -45,7 +52,7 @@ const ModalClient: React.FC<ClientModalType> = ({ open, close, idCliente }) => {
         } else {
             limpar();
         }
-    }, [idCliente, contatos]);
+    }, [idCliente]);
 
     const limpar = () => {
         setIdClient(undefined);
@@ -54,6 +61,9 @@ const ModalClient: React.FC<ClientModalType> = ({ open, close, idCliente }) => {
         setEndereco("");
         setDataNascimento(null);
         setContatos([]);
+        setCpfError(null);
+        setDataNascimentoError(null);
+        setNomeError(null);
     };
 
     const cancelar = () => {
@@ -62,6 +72,10 @@ const ModalClient: React.FC<ClientModalType> = ({ open, close, idCliente }) => {
     };
 
     const createClient = async () => {
+        const isValid = await validData();
+        console.log(isValid);
+        if (!isValid) return;
+
         const newClient: Client = {
             cpf,
             nome,
@@ -77,6 +91,9 @@ const ModalClient: React.FC<ClientModalType> = ({ open, close, idCliente }) => {
     };
 
     const updateClient = async () => {
+        const isValid = await validData();
+        if (!isValid) return;
+
         const updatedClient: Client = {
             id,
             cpf,
@@ -104,6 +121,18 @@ const ModalClient: React.FC<ClientModalType> = ({ open, close, idCliente }) => {
         }
     };
 
+    const validData = async (): Promise<boolean> => {
+        const erroCpf = validCpf(cpf);
+        const erroNascimento = birthDateValidation(dataNascimento);
+        const erroNome = stringValidation(nome);
+
+        setCpfError(erroCpf);
+        setDataNascimentoError(erroNascimento);
+        setNomeError(erroNome);
+
+        return !erroCpf && !erroNascimento && !erroNome;
+    };
+
     return (
         <Modal show={open} onHide={cancelar} backdrop="static" size="lg">
             <Modal.Header closeButton>
@@ -111,10 +140,10 @@ const ModalClient: React.FC<ClientModalType> = ({ open, close, idCliente }) => {
             </Modal.Header>
             <Modal.Body>
                 <form>
-                    <TextInput id="nameClient" label="Nome completo" saveText={setNome} text={nome} />
-                    <CpfInput id="cpf" label="CPF" saveText={setCpf} text={cpf} />
+                    <TextInput id="nameClient" label="Nome completo" saveText={setNome} text={nome} error={nomeError} />
+                    <CpfInput id="cpf" label="CPF" saveText={setCpf} text={cpf} error={cpfError}/>
+                    <DateInput id="birthDate" label="Data de nascimento" error={dataNascimentoError} saveDate={(date) => setDataNascimento(date ? new Date(date) : null)} date={dataNascimento?.toISOString().split('T')[0] || ""} />
                     <TextInput id="enderco" label="Endereco" saveText={setEndereco} text={endereco} />
-                    <DateInput id="birthDate" label="Data de nascimento" saveDate={(date) => setDataNascimento(date ? new Date(date) : null)} date={dataNascimento?.toISOString().split('T')[0] || ""} />
                 </form>
                 {idCliente && <ContactList contacts={contatos} idClient={idCliente} onUpdateContacts={setContatos} />}
             </Modal.Body>

@@ -5,17 +5,18 @@ interface CampoCpfProps {
     label: string;
     saveText: (data: string) => void;
     text?: string | null;
+    error?: string | null;
 }
 
 const formatarCpf = (cpf: string): string => {
-    const apenasNumeros = cpf.replace(/\D/g, "").slice(0, 11); // Limita a 11 dígitos
+    const apenasNumeros = cpf.replace(/\D/g, "").slice(0, 11);
     return apenasNumeros
         .replace(/(\d{3})(\d)/, "$1.$2")
         .replace(/(\d{3})(\d)/, "$1.$2")
         .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
 };
 
-const TextInputCpf: React.FC<CampoCpfProps> = ({ id, label, saveText, text }) => {
+const TextInputCpf: React.FC<CampoCpfProps> = ({ id, label, saveText, text, error }) => {
     const [localText, setLocalText] = useState<string>("");
 
     useEffect(() => {
@@ -26,7 +27,7 @@ const TextInputCpf: React.FC<CampoCpfProps> = ({ id, label, saveText, text }) =>
         const entrada = e.target.value;
         const cpfFormatado = formatarCpf(entrada);
         setLocalText(cpfFormatado);
-        saveText(cpfFormatado.replace(/\D/g, "")); // salva apenas os números
+        saveText(cpfFormatado.replace(/\D/g, ""));
     };
 
     return (
@@ -35,7 +36,7 @@ const TextInputCpf: React.FC<CampoCpfProps> = ({ id, label, saveText, text }) =>
                 {label}
             </label>
             <input
-                className="form-control"
+                className={`form-control ${error ? "is-invalid" : ""}`}
                 type="text"
                 id={id}
                 value={localText}
@@ -44,6 +45,12 @@ const TextInputCpf: React.FC<CampoCpfProps> = ({ id, label, saveText, text }) =>
                 inputMode="numeric"
                 placeholder="000.000.000-00"
             />
+
+            {error && (
+                <div className="invalid-feedback">
+                    {error}
+                </div>
+            )}
         </div>
     );
 };

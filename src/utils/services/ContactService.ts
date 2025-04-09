@@ -23,7 +23,7 @@ export const updateContactService = async (contact: Contact) => {
         const url = `contacts/${contact.id}`;
         const response = await AxiosClient.put(url, contact);
 
-        if (response.status === 200) {
+        if (response.status === 201) {
             console.log('Contato atualizado com sucesso:', response.data);
             return response.data;
         } else {
