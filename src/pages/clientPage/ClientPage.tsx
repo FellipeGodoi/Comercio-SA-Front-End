@@ -1,7 +1,11 @@
+import {useParams} from "react-router-dom";
+
 export default function ClientPage() {
+    const { id } = useParams();
+
     return (
         <>
-            ClientPage
+            <h1>ID do Cliente: {id}</h1>
         </>
-    )
+    );
 }

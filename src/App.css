@@ -1,6 +1,14 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
   text-align: center;
 }
 
+.blueButton {
+  background: var(--azul-principal);
+  color: white;
+}
+.blueButton {
+  background: var(--laranja);
+  color: black;
+  font-weight: bold;
+}

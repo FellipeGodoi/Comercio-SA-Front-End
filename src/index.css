@@ -1,13 +1,18 @@
 :root {
   font-family: Arial, sans-serif;
-
+  --azul-principal: #13397E;
+  --laranja: #EF6E17
 }
 
 body {
   margin: 0;
-  display: flex;
 }
 
+label{
+  color: var(--azul-principal) !important;
+}
 
-
+p{
+  color: var(--azul-principal) !important;
+}
 
